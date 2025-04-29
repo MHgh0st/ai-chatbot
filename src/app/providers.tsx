@@ -4,7 +4,9 @@
 import { useRouter } from 'next/navigation';
 import { HeroUIProvider } from '@heroui/react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
+import { Provider as JotaiProvider } from 'jotai';
 import { AnimatePresence } from 'framer-motion';
+import { createStore } from 'jotai';
 
 // Only if using TypeScript
 declare module '@react-types/shared' {
@@ -17,11 +19,14 @@ declare module '@react-types/shared' {
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const Store = createStore();
 
   return (
     <HeroUIProvider navigate={router.push}>
-      <NextThemesProvider attribute="class" defaultTheme="system" enableSystem>
-        <AnimatePresence mode="wait">{children}</AnimatePresence>
+      <NextThemesProvider attribute="class" defaultTheme="light">
+        <AnimatePresence mode="wait">
+          <JotaiProvider store={Store}>{children}</JotaiProvider>
+        </AnimatePresence>
       </NextThemesProvider>
     </HeroUIProvider>
   );
