@@ -3,19 +3,24 @@
 import { Image } from '@heroui/react';
 import NextImage from 'next/image';
 
-export default function Logo() {
+type Props = {
+  className?: string;
+  width?: number;
+  height?: number;
+};
+
+export default function Logo(props: Props) {
   return (
     <>
-      <div className="w-full flex justify-center mb-10">
-        <Image
-          src="/next.svg"
-          width={100}
-          height={20}
-          as={NextImage}
-          radius="none"
-          alt="Next Logo"
-        ></Image>
-      </div>
+      <Image
+        className={props.className}
+        src="/next.svg"
+        width={props.width || 180}
+        height={props.height || 30}
+        as={NextImage}
+        radius="none"
+        alt="Next Logo"
+      ></Image>
     </>
   );
 }

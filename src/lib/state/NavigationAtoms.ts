@@ -1,3 +1,3 @@
 import { atom } from 'jotai';
 
-const isOpen = atom<boolean>(false);
+export const isOpenDrawer = atom<boolean>(false);

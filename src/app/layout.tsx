@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Providers } from './providers';
+import { YekanBakh } from './font';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -13,8 +14,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
+    <html
+      lang="en"
+      dir="rtl"
+      suppressHydrationWarning
+      // style={{ fontFamily: `var(${YekanBakh.variable})` }}
+    >
+      <body className={YekanBakh.className}>
         <Providers>{children}</Providers>
       </body>
     </html>
