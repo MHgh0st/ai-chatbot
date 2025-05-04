@@ -20,7 +20,9 @@ export default function RootLayout({
       suppressHydrationWarning
       // style={{ fontFamily: `var(${YekanBakh.variable})` }}
     >
-      <body className={YekanBakh.className}>
+      <body
+        className={`${YekanBakh.className} bg-gradient-to-b from-blue-50 to-blue-100 dark:from-gray-900 dark:to-gray-800 min-h-screen`}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>

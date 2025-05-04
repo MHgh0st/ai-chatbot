@@ -15,12 +15,12 @@ export default function MenuItemParent({
       <Accordion
         variant="light"
         isCompact
-        className="bg-default rounded-xl pl-4"
+        className="bg-default rounded-xl pr-4"
       >
         <AccordionItem
           key="1"
           aria-label={item.label}
-          title={<p className="text-sm -ml-1">{item.label}</p>}
+          title={<p className="text-sm -mr-1">{item.label}</p>}
           startContent={<Icon icon={item.icon} fontSize={16} />}
         >
           <div className="flex flex-col gap-y-2">
