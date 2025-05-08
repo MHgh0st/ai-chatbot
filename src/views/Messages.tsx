@@ -2,6 +2,8 @@
 
 import type { Messages } from '@/types/MessagesTypes';
 
+import { useUser } from '@/hooks/useUser';
+
 import UserMessages from '@/components/Messages/UserMessages';
 import AiMessages from '@/components/Messages/AiMessages';
 import { useState, useEffect } from 'react';
@@ -11,6 +13,10 @@ type Props = {
 };
 
 export default function Messages(props: Props) {
+  const { user } = useUser();
+  useEffect(() => {
+    console.log('user: ', user);
+  }, [user]);
   return (
     <>
       <div

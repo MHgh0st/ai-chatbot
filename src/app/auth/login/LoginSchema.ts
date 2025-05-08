@@ -1,6 +1,8 @@
 import * as z from '@zod/mini';
 
 export const LoginSchema = z.object({
-  email: z.email('لطفا یک ایمیل معتبر وارد کنید'),
-  password: z.string(),
+  username: z.string('نام کاربری الزامی است'),
+  password: z.string('رمز عبور الزامی است'),
 });
+
+export type LoginFormValues = z.infer<typeof LoginSchema>;
