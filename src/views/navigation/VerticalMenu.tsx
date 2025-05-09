@@ -13,20 +13,48 @@ import {
   DrawerFooter,
 } from '@heroui/react';
 
+import { useUser } from '@/hooks/useUser';
 // Bottom menu items
-const bottomMenuItems = [
-  {
-    label: 'ثبت نام / ورود',
-    href: '/auth/login',
-    icon: 'solar:login-3-bold-duotone',
-  },
-];
+// const bottomMenuItems = [
+//   {
+//     label: 'ثبت نام / ورود',
+//     href: '/auth/login',
+//     icon: 'solar:login-3-bold-duotone',
+//   },
+// ];
 
 export default function VerticalMenu(props: { className: string }) {
   const [isOpen, setIsOpen] = useAtom(isOpenDrawer);
 
+  const { user } = useUser();
+
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
+  };
+
+  const bottomMenuItems = () => {
+    return (
+      <>
+        {user ? (
+          <MenuItem
+            item={{
+              label: 'خروج',
+              href: '',
+              icon: 'solar:logout-3-bold-duotone',
+              color: 'danger',
+            }}
+          />
+        ) : (
+          <MenuItem
+            item={{
+              label: 'ثبت نام / ورود',
+              href: '/auth/login',
+              icon: 'solar:login-3-bold-duotone',
+            }}
+          />
+        )}
+      </>
+    );
   };
 
   return (
@@ -52,10 +80,7 @@ export default function VerticalMenu(props: { className: string }) {
 
         {/* Bottom menu items */}
         <div className="mt-auto border-t border-zinc-200 dark:border-zinc-700 pt-2 mb-6 flex flex-col gap-y-2">
-          {bottomMenuItems.map((item, index) => {
-            const itemKey = `bottom-menu-item-${item.label}-${index}`;
-            return <MenuItem key={itemKey} item={item} />;
-          })}
+          {bottomMenuItems()}
         </div>
       </div>
 
@@ -81,10 +106,7 @@ export default function VerticalMenu(props: { className: string }) {
             })}
           </DrawerBody>
           <DrawerFooter className="flex flex-col border-t border-zinc-200 dark:border-zinc-700 pt-2">
-            {bottomMenuItems.map((item, index) => {
-              const itemKey = `mobile-bottom-menu-item-${item.label}-${index}`;
-              return <MenuItem key={itemKey} item={item} />;
-            })}
+            {bottomMenuItems()}
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

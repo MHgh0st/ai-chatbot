@@ -37,7 +37,6 @@ export default function LoginPage() {
     setIsLoading(true);
     try {
       const user = await LoginUser(data);
-      console.log('user: ', user);
       setIsLoading(false);
       addToast({
         title: 'با موفقیت وارد شدید',

@@ -15,7 +15,11 @@ export default function MenuItem(props: { item: MenuItemTypes }) {
         <Button
           fullWidth
           className="w-full justify-start"
-          color={PathName === props.item.href ? 'primary' : 'default'}
+          color={
+            PathName === props.item.href
+              ? 'primary'
+              : props.item.color || 'default'
+          }
           startContent={<Icon icon={props.item.icon} fontSize={16} />}
         >
           {props.item.label}

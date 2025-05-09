@@ -13,10 +13,8 @@ type Props = {
 };
 
 export default function Messages(props: Props) {
-  const { user } = useUser();
-  useEffect(() => {
-    console.log('user: ', user);
-  }, [user]);
+  const { user, isLoading } = useUser();
+
   return (
     <>
       <div
@@ -29,6 +27,7 @@ export default function Messages(props: Props) {
             <AiMessages key={index} Message={Message} />
           )
         )} */}
+        {isLoading ? 'loading...' : user?.name}
       </div>
     </>
   );

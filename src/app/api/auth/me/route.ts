@@ -21,8 +21,6 @@ const tokenDecoder = (token: string) => {
 export async function GET() {
   const cookieStore = await cookies();
   const tokenCookie = cookieStore.get('token');
-  console.log('All cookies:', cookieStore.getAll());
-  console.log('user token cookie: ', tokenCookie);
   if (!tokenCookie) {
     return NextResponse.json(
       { user: null, error: 'No token found' },

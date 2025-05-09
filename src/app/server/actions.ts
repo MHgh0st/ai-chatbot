@@ -3,6 +3,7 @@
 import { PasswordHasher } from '@/utils/PasswordHasher';
 import { RegisterFormValues } from '@/app/auth/register/RegisterSchema';
 import { LoginFormValues } from '@/app/auth/login/LoginSchema';
+import { cookies } from 'next/headers';
 
 export const registerUser = async (data: RegisterFormValues) => {
   const res = await fetch(`${process.env.BASE_API_URL}/auth/register`, {
@@ -53,5 +54,16 @@ export const LoginUser = async (data: LoginFormValues) => {
     throw new Error(errorData.error || 'خطای نامشخص');
   }
 
-  return await res.json();
+  const response = await res.json();
+
+  const cookieStore = await cookies();
+  const tokenCookie = cookieStore.set('token', response.token, {
+    httpOnly: true,
+    sameSite: 'lax',
+    maxAge: 60 * 60 * 24,
+  });
+
+  console.log('token cookie: ', tokenCookie);
+
+  return response;
 };
