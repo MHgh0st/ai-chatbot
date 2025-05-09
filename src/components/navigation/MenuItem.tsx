@@ -6,13 +6,17 @@ import { Button, Link } from '@heroui/react';
 import { Icon } from '@iconify/react';
 import { usePathname } from 'next/navigation';
 
-export default function MenuItem(props: { item: MenuItemTypes }) {
+export default function MenuItem(props: {
+  item: MenuItemTypes;
+  onPress?: () => void;
+}) {
   const PathName = usePathname();
 
   return (
     <>
       <Link href={props.item.href}>
         <Button
+          onPress={props.onPress}
           fullWidth
           className="w-full justify-start"
           color={

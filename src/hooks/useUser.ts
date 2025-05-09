@@ -1,59 +1,35 @@
 'use client';
 
-import { useAtom } from 'jotai';
-import { useEffect } from 'react';
-import { userAtom, authLoadingAtom, type User } from '@/lib/state/AuthAtoms';
+import useSWR from 'swr';
 
-export const useUser = () => {
-  const [user, setUser] = useAtom(userAtom);
-  const [isLoading, setIsLoading] = useAtom(authLoadingAtom);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const fetchUser = async () => {
-      if (user || !isLoading) {
-        if (isLoading) setIsLoading(false);
-        return;
-      }
-
-      try {
-        const response = await fetch(`api/auth/me`, {
-          method: 'GET',
-          credentials: 'include',
-        });
-
-        if (!isMounted) return;
-
-        if (response.ok) {
-          const userData: User = await response.json();
-          setUser(userData);
-        } else {
-          setUser(null);
-          // اگر وضعیت 401 بود، شاید بخواهید کوکی را پاک کنید
-          // با فراخوانی یک API route برای logout
-          // if (response.status === 401) { /* مثلا: await fetch('/api/auth/logout', { method: 'POST' }); */ }
-        }
-      } catch (error) {
-        if (!isMounted) return;
-        console.error('Failed to fetch user data:', error);
-        setUser(null);
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    fetchUser();
-
-    return () => {
-      isMounted = false;
-    };
-    // این effect باید زمانی اجرا شود که اطلاعات کاربر (user) یا وضعیت بارگذاری (isLoading) تغییر کند،
-    // یا توابع setter اتم‌ها (که معمولا ثابت هستند) تغییر کنند.
-    // هدف اصلی این است که در اولین بارگذاری برنامه (وقتی user null و isLoading true است) اجرا شود.
-  }, [user, isLoading, setUser, setIsLoading]);
-
-  return { user, isLoading };
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  if (!res.ok) {
+    const errorData = await res
+      .json()
+      .catch(() => ({ message: `خطا در ارتباط با سرور: ${res.status}` }));
+    // اینجا می‌تونید بر اساس status خطاهای مختلف رو مدیریت کنید
+    if (res.status === 401 || res.status === 403) {
+      throw new Error(errorData.message || 'دسترسی غیر مجاز');
+    }
+    throw new Error(
+      errorData.message || 'خطایی در دریافت اطلاعات کاربر رخ داد.'
+    );
+  }
+  return res.json();
 };
+
+export function useUser() {
+  const { data, error, isLoading, mutate } = useSWR('/api/auth/me', fetcher, {
+    shouldRetryOnError: false,
+    revalidateOnFocus: false, // برای جلوگیری از رفرش خودکار موقع فوکوس روی تب
+    // dedupingInterval: 2000, // (پیش‌فرض) SWR به طور خودکار درخواست‌های تکراری در این بازه رو یکی می‌کنه
+  });
+
+  return {
+    user: data, // یا data اگه ساختار پاسخ API فرق داره
+    isLoading,
+    error,
+    mutate, // برای آپدیت دستی کش
+  };
+}

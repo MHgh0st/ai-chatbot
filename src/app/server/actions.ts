@@ -4,6 +4,7 @@ import { PasswordHasher } from '@/utils/PasswordHasher';
 import { RegisterFormValues } from '@/app/auth/register/RegisterSchema';
 import { LoginFormValues } from '@/app/auth/login/LoginSchema';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 export const registerUser = async (data: RegisterFormValues) => {
   const res = await fetch(`${process.env.BASE_API_URL}/auth/register`, {
@@ -66,4 +67,10 @@ export const LoginUser = async (data: LoginFormValues) => {
   console.log('token cookie: ', tokenCookie);
 
   return response;
+};
+
+export const LogoutUser = async () => {
+  const cookieStore = await cookies();
+  cookieStore.delete('token');
+  redirect('/login');
 };

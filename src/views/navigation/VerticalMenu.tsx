@@ -14,6 +14,7 @@ import {
 } from '@heroui/react';
 
 import { useUser } from '@/hooks/useUser';
+import { LogoutUser } from '@/app/server/actions';
 // Bottom menu items
 // const bottomMenuItems = [
 //   {
@@ -42,6 +43,9 @@ export default function VerticalMenu(props: { className: string }) {
               href: '',
               icon: 'solar:logout-3-bold-duotone',
               color: 'danger',
+            }}
+            onPress={() => {
+              LogoutUser();
             }}
           />
         ) : (
