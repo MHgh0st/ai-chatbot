@@ -5,6 +5,7 @@
 این پروژه یک وب‌اپلیکیشن پایه برای ساخت و مدیریت چت‌بات‌های هوشمند است که با Next.js و TypeScript توسعه داده شده است. هدف، ایجاد زیرساخت ماژولار برای مدیریت کاربران، گفتگوها، لاگ‌ها و اتصال به LLMها است. «این مخزن هنوز کامل نیست و آماده استفاده در محیط تولیدی نمی‌باشد.»
 
 <!-- نیاز به اسکرین‌شات از UI اصلی (لیست گفتگو + پنل چت) -->
+<img width="2472" height="1206" alt="image" src="https://github.com/user-attachments/assets/eab1d275-0b7c-4ebd-8628-c6af14e58eee" />
 
 ## ✨ ویژگی‌ها (در حال توسعه)
 - معماری Next.js App Router با TypeScript
@@ -39,6 +40,10 @@
 - بخش‌های احراز هویت، مدیریت نقش‌ها، و اتصال به LLMها نیاز به تکمیل دارند.
 
 <!-- نیاز به اسکرین‌شات از ارور/بنر "WIP" در UI اگر موجود است -->
+<img width="2464" height="1202" alt="image" src="https://github.com/user-attachments/assets/d1d55a9e-7a56-4c1a-bd49-17f2a7e2dc7b" />
+
+<img width="2459" height="1194" alt="image" src="https://github.com/user-attachments/assets/bf7b7321-ff1e-4217-8f3b-79cee488cfc1" />
+
 
 ## 🧩 نقشه راه (Roadmap)
 - [ ] تکمیل احراز هویت با NextAuth (OAuth/Email/Phone)
